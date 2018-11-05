@@ -103,14 +103,14 @@ def edit_profile():
 def follow(id):
     user = User.query.filter_by(id=id).first()
     if user is None:
-        flash('User {} not found.'.format(username))
+        flash('User {} not found.'.format(user.username))
         return redirect(url_for('index'))
     if user == current_user:
         flash('You cannot follow yourself!')
         return redirect(url_for('user', id=id))
     current_user.follow(user)
     db.session.commit()
-    flash('You are following {}!'.format(username))
+    flash('You are following {}!'.format(user.username))
     return redirect(url_for('user', id=id))
 
 
@@ -119,12 +119,12 @@ def follow(id):
 def unfollow(id):
     user = User.query.filter_by(id=id).first()
     if user is None:
-        flash('User {} not found.'.format(username))
+        flash('User {} not found.'.format(user.username))
         return redirect(url_for('index'))
     if user == current_user:
         flash('You cannot unfollow yourself!')
         return redirect(url_for('user', id=id))
     current_user.unfollow(user)
     db.session.commit()
-    flash('You are not following {}.'.format(username))
+    flash('You are not following {}.'.format(user.username))
     return redirect(url_for('user', id=id))
